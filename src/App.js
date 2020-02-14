@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import ProfilePage from './pages/ProfilePage'
 import MarketPage from './pages/MarketPage'
+import Navbar from './components/Navbar'
 
 
 class App extends React.Component {
@@ -41,6 +42,14 @@ class App extends React.Component {
           return;
     }
   }
+
+  handleSignout=async()=>{
+    try{
+      await Auth.signOut()
+    } catch {
+      console.error('Error signing out user');
+    }
+  }
   render() {
     const {user}=this.state;
     return !user?(
@@ -48,6 +57,8 @@ class App extends React.Component {
     ):
     <Router>
       <>
+      {/*navigation*/}
+      <Navbar user={user} handleSignout={this.handleSignout}/>
       {/*Routes*/}
       <div className="app-container">
         <Route exact path="/" component = {HomePage}/>
